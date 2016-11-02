@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block content %}
+
+    {% include 'gwapit/navbar.html' %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <section ng-controller="BodyController as vm">
+
+                    <p class="text-info" ng-bind-html="retrieveEmailsStatus"></p>
+
+                    {# Error messages #}
+                    <p class="text-danger" ng-bind-html="retrieveEmailsError"></p>
+
+                    <div ng-show="showItem" class="mail-box">
+                        <div class="inbox-body">
+
+                            <div class="mail-box table-inbox">
+                                <table class="table">
+                                    <tbody ng-repeat="email in emails track by $index">
+                                    <tr class="unread">
+                                        <td class="inbox-small-cells">[[$index + 1]]</td>
+                                        <td class="view-message text-left">[[email.sender]]</td>
+                                        <td class="view-message ">[[email.subject]]</td>
+                                        <td class="view-message inbox-small-cells"></td>
+                                        <td class="view-message text-right">[[email.date]]</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}
+
+{% block extra_javascript %}
+    <script src="{% static "gwapit/js/app.js" %}"></script>
+    <script src="{% static "gwapit/js/app.config.js" %}"></script>
+    <script src="{% static "gwapit/js/app.routes.js" %}"></script>
+    <script src="{% static "gwapit/js/authentication/authentication.module.js" %}"></script>
+    <script src="{% static "gwapit/js/authentication/services/authentication.service.js" %}"></script>
+
+    <script src="{% static "gwapit/js/resource/resource.module.js" %}"></script>
+    <script src="{% static "gwapit/js/resource/factories/emails.factory.js" %}"></script>
+
+    <script type="text/javascript" src="{% static 'gwapit/js/layout/layout.module.js' %}"></script>
+    <script type="text/javascript" src="{% static 'gwapit/js/layout/controllers/navbar.controller.js' %}"></script>
+    <script type="text/javascript" src="{% static 'gwapit/js/layout/controllers/body.controller.js' %}"></script>
+{% endblock extra_javascript %}
